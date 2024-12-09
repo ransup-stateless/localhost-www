@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'VT323';
+  src: url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+}
+
+@layer base {
+  body {
+    @apply bg-black text-green-500 font-mono;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    background-image: url('https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-120.5,36.5,6.5,0/1200x1200?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.85),
+      rgba(0, 0, 0, 0.85)
+    );
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      rgba(0, 255, 0, 0.03) 0px,
+      rgba(0, 255, 0, 0.03) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  ::selection {
+    @apply bg-green-500 text-black;
+  }
+}
+
+@layer components {
+  .crt::before {
+    content: " ";
+    @apply fixed inset-0 pointer-events-none;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 4px;
+    z-index: 50;
+  }
+
+  .crt::after {
+    content: " ";
+    @apply fixed inset-0 pointer-events-none;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0.15;
+    z-index: 50;
+    animation: flicker 0.15s infinite;
+  }
+
+  .terminal-window {
+    @apply bg-black/90 border border-green-500 rounded-lg p-6 backdrop-blur-sm relative z-10;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3), inset 0 0 15px rgba(0, 255, 0, 0.1);
+  }
+
+  .scanline {
+    @apply fixed inset-0 pointer-events-none;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 255, 0, 0.05) 50%);
+    background-size: 100% 4px;
+    animation: scanline 10s linear infinite;
+  }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.15; }
+  50% { opacity: 0.2; }
+  100% { opacity: 0.15; }
+}
+
+@keyframes scanline {
+  from { transform: translateY(0); }
+  to { transform: translateY(100vh); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
